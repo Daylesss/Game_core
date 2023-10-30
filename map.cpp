@@ -6,7 +6,7 @@
 #include <thread>
 #include <vector>
 #include <Algorithm>
-
+// #include "map.h"
 
 
 class Cell{
@@ -127,7 +127,7 @@ class MapObj {
             return alive;
         }
 
-        void decrease_hp(){
+        virtual void decrease_hp(){
             if (!alive){
                 std::cout<<"Already destroyed";
                 return;
@@ -141,29 +141,40 @@ class MapObj {
 
             if (map_hp==0){
                 alive = false;
-                Obj_name = Obj_name + " (destroyed)";
                 std::cout<< Obj_name<< " destructed"<<std::endl;
+                Obj_name = Obj_name + " (destroyed)";
             }
         }
+
+        virtual void use(){
+            std::cout<< "You can not use this";
+        }
 };
-
-
+class Player: MapObj{
+    int points;
+    int health;
+    int damage;
+    int mana;
+    Item item;
+    public:
+        void throw_out();
+};
 class Item: public MapObj {
     
         int cost = 0;
-        int lvl = 0;
         int damage = 0;
         int health = 0;
         int mana = 0;
-        int item_data[5] ={cost, lvl, damage, health, mana};
+        int item_data[5] ={cost, level, damage, health, mana};
+
         void set_params(int key){
 
             std::vector<std::string> names = {"Red relic", "Green relic", "Blue relic", "White relic", "Black relic", "Rainbow relic"};
             map_hp = key % 3 + 1;
-            cost  = (key % 10 + 1) * lvl;
+            cost  = (key % 10 + 1) * level;
             int choice = key % 6;
             Obj_name = names[choice];
-            int modif = (key % 5 + 1) * lvl;
+            int modif = (key % 5 + 1) * level;
 
             if (choice==0){
                 damage = modif;
@@ -194,7 +205,7 @@ class Item: public MapObj {
             }
 
             item_data[0] = cost;
-            item_data[1] = lvl;
+            item_data[1] = level;
             item_data[2] = damage;
             item_data[3] = health;
             item_data[4] = mana;
@@ -204,8 +215,8 @@ class Item: public MapObj {
 
     public:
         
-        Item(int _lvl): MapObj(lvl){
-            lvl = _lvl;
+        Item(int _lvl): MapObj(_lvl) {
+            level = _lvl;
             srand(time(0));
             int random_key = rand();
             alive = true;
@@ -216,16 +227,143 @@ class Item: public MapObj {
         int* get_item_data(){
             return item_data;
         }
+
+        
+
+        void use(Player * player){
+            char choice = '\0';
+            while (true){
+                std::cout<<"---------------------\n"<<"You find a "<<Obj_name<<"!!"<<"---------------------\n"<<std::endl;
+
+
+                std::cout<<"Cost: "<<cost<<"points"<<std::endl;
+                std::cout<<"+ "<<damage<<" damage"<<std::endl;
+                std::cout<<"+ "<<health<<" health"<<std::endl;
+                std::cout<<"+ "<<mana<<" mana"<<std::endl;
+                std::cout<<"---------------------\n\n"<<"Do you want to pick it?\n"<<"(Y/N)"<<std::endl;
+
+                std::cin>>choice;
+                if (choice=='Y'){
+                    if (cost> player->points){
+                        std::cout<<"You have not got enough points...";
+                        return;
+                    }
+                    player->throw_out();
+                    player->points -= cost;
+                    player->health += health;
+                    player->damage += damage;
+                    player->mana += mana;
+                    //
+                    // ДОБАВЛЕНИЕ  ITEM  К PLAYER СДЕЛАТЬ В ФУНКЦИИ!!!
+                    //
+                    this->decrease_hp();
+                    return;
+                }
+
+                if (choice=='N'){
+                    std::cout<<"You're walking away from the "<<Obj_name<<std::endl;
+                    return;
+                }
+
+                std::cout<<"Wrong input. Input Y or N";
+
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+            }
+        }
+
+        virtual void decrease_hp(){
+            if (!alive){
+                std::cout<<"Already empty";
+                return;
+            }
+            
+            if (map_hp <= 0){
+                throw NegativeHealth();
+            }
+            
+            map_hp -=1;
+
+            if (map_hp==0){
+                alive = false;
+                std::cout<< Obj_name<< " empty now."<<std::endl;
+                Obj_name = Obj_name + " (empty)";
+            }
+        }
+
 };
 
 
+class Altar: public MapObj {
+    int cost = 0;
+    int heal = 0;
+    public:
+
+        Altar(int _lvl): MapObj(_lvl){
+            Obj_name = "Altar";
+            alive = true;
+            map_hp = _lvl;
+            srand(time(0));
+            level = _lvl;
+            cost = (rand() % 5 + 1) * level;
+            heal = (rand() % 7 + 1) * level;
+        }
+
+        void use(Player *player){
+
+            char choice = '\0';
+            while (true){
+                std::cout<<"---------------------\n"<<"You find an Altar!!"<<"---------------------\n"<<std::endl;
+
+                std::cout<<"Heal "<<heal<<"hp?\n Cost: "<<cost<<" points\n (Y/N)";
+
+                std::cin>>choice;
+                if (choice=='Y'){
+                    if (cost> player->points){
+                        std::cout<<"You have not got enough points...";
+                        return;
+                    }
+                    player->health += heal;
+                    player->points -= cost;
+                    this->decrease_hp();
+                    return;
+                }
+
+                if (choice=='N'){
+                    std::cout<<"You're walking away from the altar";
+                    return;
+                }
+
+                std::cout<<"Wrong input. Input Y or N";
+
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+            }
+
+
+        }
+
+        
+
+};
 class Player: public MapObj {
+    friend MapObj;
+    friend Altar;
+    friend Item;
     protected:
         std::pair<int, int> xy = {0,0};
+        int points = 0;
         int health = 5;
         int damage = 1;
         int mana = 0;
         Item item{0};
+
+        void change_xy(Map &map, std::pair<int, int> _xy){
+            if (map.check_way(_xy)){
+                xy = _xy;
+            }
+            else{
+                std::cout<<"You can not go to this cell."<<std::endl;
+            }
+        }
 
     public:
         Player (Map& map, std::pair<int, int> _xy, int lvl): MapObj(lvl) {
@@ -243,14 +381,20 @@ class Player: public MapObj {
             }
             }
 
-        void change_xy(Map &map, std::pair<int, int> _xy){
-            if (map.check_way(_xy)){
-                xy = _xy;
+        void throw_out(){
+            int *item_data = item.get_item_data(); // int item_data[5] ={cost, level, damage, health, mana};
+            damage -= item_data[2];
+            mana -= item_data[4];
+
+            if (health > item_data[3]){
+                health -= item_data[3];
             }
             else{
-                std::cout<<"You can not go to this cell."<<std::endl;
+                health = 1;
             }
+            item = Item(0);
         }
+
 
         void go_left(Map& map){
             std::pair<int, int> xy = get_xy();
@@ -279,38 +423,67 @@ class Player: public MapObj {
         std::pair<int, int> get_xy(){
             return xy;
         }
+
+        int get_points(){
+            return points;
+        }
+
+        int* get_player_data(){
+            int data[3] ={health,damage, mana};
+            return data;
+        }
+
+        void set_item(Item &_item){
+            item = _item;
+        }
 };
 
 
 
 
-class Altar: MapObj {
-    
-};
 
 int main()
 {
-    // Map aaa(-1);
-    // std::pair<int, int> th = {1, 0};
+    Map map(1);
+    std::pair<int, int> th = {1, 0};
     // aaa.create_map();
     // Player map_obj(aaa, th, 1);
 
     Item item(1);
+    Altar altar(1);
+    Player player(map, th, 1);
 
-    std::cout << item.get_map_hp()<<std::endl;
-    item.decrease_hp();
+    std::cout <<"Item "<< item.get_item_data()[3]<<std::endl;
+    std::cout <<"Player "<< player.get_player_data()[0]<<std::endl;
+    item.use(&player);
+
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    std::cout << item.get_map_hp()<<std::endl;
+
+    std::cout <<"New player "<< player.get_player_data()[0]<<std::endl;
+
+    player.set_item(item);
+
+    player.throw_out();
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    for(int i = 0; i<5; i++)
-    {
-        std::cout<< item.get_item_data()[i]<<"  ";
-    }
-    std::cout<<std::endl;
+
+    std::cout <<"Throw player "<< player.get_player_data()[0]<<std::endl;
 
 
-    std::cout<< item.get_name()<<std::endl;
+
+    // item.decrease_hp();
+    // std::this_thread::sleep_for(std::chrono::seconds(1));
+    // std::cout << item.get_map_hp()<<std::endl;
+
+
+    // for(int i = 0; i<5; i++)
+    // {
+    //     std::cout<< item.get_item_data()[i]<<"  ";
+    // }
+    // std::cout<<std::endl;
+
+
+    // std::cout<< item.get_name()<<std::endl;
 
 
 
