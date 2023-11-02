@@ -1,3 +1,6 @@
+#include <windows.h>
+#include <conio.h>
+#include <iostream>
 #include <string>
 #include <iostream>
 #include <chrono>
@@ -48,7 +51,7 @@ class MapObj {
         std::string get_name();
         int get_map_hp();
         bool is_alive();
-        virtual void decrease_hp();
+        virtual void decrease_map_hp();
         virtual void use();
 };
 struct ItemData{
@@ -60,19 +63,32 @@ struct ItemData{
 
 class Altar;
 class Item;
+class Enemy;
 
 class Player: public MapObj {
     friend MapObj;
     friend Altar;
     friend Item;
+    friend Enemy;
+
     protected:
         std::pair<int, int> xy = {0,0};
-        int points = 100;
+        int points = 10;
         int health = 5;
         int damage = 1;
-        int mana = 0;
+        int mana = 1;
+        int max_health = 5;
+        int max_mana = 1;
         ItemData item_data{};
 
+        void die();
+        virtual void decrease_health(int x);
+        void increase_health(int x);
+        bool decrease_mana(int x, bool change);
+        void increase_mana(int x);
+        bool change_points(int x); 
+        void change_max_health(int x);
+        void change_max_mana(int x);
         void change_xy(Map &map, std::pair<int, int> _xy);
     public:
         Player (Map& map, std::pair<int, int> _xy, int lvl): MapObj(lvl){
@@ -93,7 +109,9 @@ class Player: public MapObj {
         std::pair<int, int> get_xy();
         int get_points();
         int get_health();
+        int get_max_health();
         int get_mana();
+        int get_max_mana();
         int get_damage();
 
         void set_item(ItemData _item_data);
@@ -102,6 +120,7 @@ class Player: public MapObj {
         void go_right(Map& map);
         void go_up(Map& map);
         void go_down(Map& map);
+
 };
 
 class Item: public MapObj {
@@ -124,7 +143,7 @@ class Item: public MapObj {
             };
             ItemData get_item_data();
             void use(Player &player);
-            virtual void decrease_hp();
+            void decrease_map_hp();
 };
 
 class Altar: public MapObj {
@@ -150,18 +169,24 @@ struct EnemyData{
     bool boss = false;
     int damage = 0;
     int health = 5;
+    int points = 0;
 };
 
 class Enemy: public MapObj{
     EnemyData enemy_data;
-
+    std::string get_inp();
+    std::pair<int, int> gen_nums();
     void fight(Player &player);
+    void decrease_health(int x);
+
+    void die();
 
     public:
     Enemy (int lvl): MapObj(lvl){
         srand(time(0));
         std::string names[4] = {"Bandit", "Monster", "Knight", "Elemental"}; 
-        Obj_name = names[rand() % 5];
+        Obj_name = names[rand() % 4];
+        enemy_data.name = Obj_name;
         alive = true;
         map_hp = 1;
         if ((rand() % 5) > 3){
@@ -171,8 +196,8 @@ class Enemy: public MapObj{
         }
 
         enemy_data.damage = (rand() % 3 + 1) * level;
-        enemy_data.health = (rand() % 10 + 1) * level;
-
+        enemy_data.health = (rand() % 10 + 1) * level + 1;
+        enemy_data.points = (rand() % 10 + 2) * level;
     };
 
     EnemyData get_enemy_data();

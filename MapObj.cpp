@@ -22,7 +22,7 @@ bool MapObj::is_alive(){
     return alive;
 }
 
-void MapObj::decrease_hp(){
+void MapObj::decrease_map_hp(){
     if (!alive){
         std::cout<<"Already destroyed"<<std::endl;
         return;

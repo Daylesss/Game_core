@@ -24,7 +24,8 @@ bool Map::check_way(std::pair<int, int> xy) {
 
 Cell Map::get_cell(std::pair<int, int> xy) {
     if (check_way(xy)){
-        return sqr_map[xy.first][xy.second];
+        Cell * cell = sqr_map[xy.first][xy.second];
+        return cell
     }
     else {
         std::cerr<<"Wrong coordinates"<<std::endl;
