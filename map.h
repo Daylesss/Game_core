@@ -10,29 +10,12 @@
 
 #pragma(once)
 
-class Cell{
-    int lvl = 1;
-    int done = 0;
-    public:
-        Cell(int level);
-        int get_lvl();
-        int is_done();
-};
-
-class Map {
-    int lvl = 1;
-    bool created = false;
-    std::string game_status = "-";
-    std::vector<std::vector<Cell>> sqr_map;
-    class WrongPoint{};
-    public:
-        Map(int level);
-        bool check_way(std::pair<int, int> xy);
-        Cell get_cell(std::pair<int, int> xy);
-        void create_map();
-        bool is_created();
-        std::string get_game_status();
-};
+class Map;
+class Player;
+class Altar;
+class Item;
+class Enemy;
+class Cell;
 
 class MapObj {
     protected:
@@ -52,8 +35,42 @@ class MapObj {
         int get_map_hp();
         bool is_alive();
         virtual void decrease_map_hp();
-        virtual void use();
+        virtual void use(Player &player);
 };
+
+
+void explore_map(Player &player, Map &map);
+class Map {
+    friend void explore_map(Player &player, Map &map);
+    int lvl = 1;
+    bool created = false;
+    std::string game_status = "-";
+    std::vector<std::vector<Cell>> sqr_map;
+    class WrongPoint{};
+
+    void explore(Player &player);
+
+    public:
+        Map(int level){
+            if (level<=0){
+                std::cerr<<"Level must be positive. Setting it to 1."<<std::endl;
+                lvl = 1;
+                created = false;
+                game_status = "start";
+            }
+            else{
+                created = false;
+                lvl = level;
+                game_status = "start";
+            }
+        };
+        bool check_way(std::pair<int, int> xy);
+        Cell get_cell(std::pair<int, int> xy);
+        void create_map();
+        bool is_created();
+        std::string get_game_status();
+};
+
 struct ItemData{
     std::string item_name;
     int data[5];
@@ -61,18 +78,17 @@ struct ItemData{
 };
 
 
-class Altar;
-class Item;
-class Enemy;
 
 class Player: public MapObj {
+    friend Map;
     friend MapObj;
     friend Altar;
     friend Item;
     friend Enemy;
+    friend void explore_map(Player &player, Map &map);
 
     protected:
-        std::pair<int, int> xy = {0,0};
+        std::pair<int, int> position = {0,0};
         int points = 10;
         int health = 5;
         int damage = 1;
@@ -89,24 +105,15 @@ class Player: public MapObj {
         bool change_points(int x); 
         void change_max_health(int x);
         void change_max_mana(int x);
-        void change_xy(Map &map, std::pair<int, int> _xy);
+        bool change_xy(Map &map, std::pair<int, int> _xy);
     public:
-        Player (Map& map, std::pair<int, int> _xy, int lvl): MapObj(lvl){
+        Player (int lvl): MapObj(lvl){
         alive = true;
         map_hp = 1;
         level = lvl;
-
-
-        if (map.check_way(_xy)){
-            xy = _xy;
-        }
-        else{
-            std::cerr<<"Wrong input x or y"<< std::endl;
-            throw WrongInput();
-        }
         };
         void throw_out_item();
-        std::pair<int, int> get_xy();
+        std::pair<int, int> get_position();
         int get_points();
         int get_health();
         int get_max_health();
@@ -116,10 +123,10 @@ class Player: public MapObj {
 
         void set_item(ItemData _item_data);
 
-        void go_left(Map& map);
-        void go_right(Map& map);
-        void go_up(Map& map);
-        void go_down(Map& map);
+        bool go_left(Map& map);
+        bool go_right(Map& map);
+        bool go_up(Map& map);
+        bool go_down(Map& map);
 
 };
 
@@ -155,7 +162,6 @@ class Altar: public MapObj {
             Obj_name = "Altar";
             alive = true;
             map_hp = _lvl;
-            srand(time(0));
             level = _lvl;
             cost = (rand() % 5 + 1) * level;
             heal = (rand() % 7 + 1) * level;
@@ -183,7 +189,6 @@ class Enemy: public MapObj{
 
     public:
     Enemy (int lvl): MapObj(lvl){
-        srand(time(0));
         std::string names[4] = {"Bandit", "Monster", "Knight", "Elemental"}; 
         Obj_name = names[rand() % 4];
         enemy_data.name = Obj_name;
@@ -205,3 +210,31 @@ class Enemy: public MapObj{
     void use(Player & player);
 
 };
+
+class Cell{
+    friend Map;
+    int lvl = 1;
+    int done = 0;
+    MapObj * map_obj;
+
+    void explore(Player &player);
+    public:
+        Cell(int level){
+            lvl = level;
+
+            int key = rand() % 3;
+
+            if (key == 0){
+                map_obj = new Altar{lvl};
+            }
+            else if (key == 1){
+                map_obj = new Item{lvl};
+            }
+            else{
+                map_obj = new Enemy{lvl};
+            }
+        }  
+        int get_lvl();
+        int is_done();
+};
+

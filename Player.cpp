@@ -94,12 +94,15 @@ bool Player::change_points(int x){
     }
 }
 
-void Player::change_xy(Map &map, std::pair<int, int> _xy){
+bool Player::change_xy(Map &map, std::pair<int, int> _xy){
     if (map.check_way(_xy)){
-        xy = _xy;
+        position = _xy;
+        std::cout <<"New: (" <<position.first<<":"<< position.second <<")" << std::endl;
+        return true;
     }
     else{
         std::cout<<"You can not go to this cell."<<std::endl;
+        return false;
     }
 }
 
@@ -118,32 +121,40 @@ void Player::throw_out_item(){
 }
 
 
-void Player::go_left(Map& map){
-    std::pair<int, int> xy = get_xy();
+bool Player::go_left(Map& map){
+    std::pair<int, int> xy = get_position();
+    std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
     xy.first--;
-    change_xy(map, xy);
+    bool is_go= change_xy(map, xy);
+    return is_go;
 }
 
-void Player::go_right(Map& map){
-    std::pair<int, int> xy = get_xy();
+bool Player::go_right(Map& map){
+    std::pair<int, int> xy = get_position();
+    std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
     xy.first++;
-    change_xy(map, xy);
+    bool is_go= change_xy(map, xy);
+    return is_go;
 }
 
-void Player::go_up(Map& map){
-    std::pair<int, int> xy = get_xy();
+bool Player::go_up(Map& map){
+    std::pair<int, int> xy = get_position();
+    std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
     xy.second++;
-    change_xy(map, xy);
+    bool is_go = change_xy(map, xy);
+    return is_go;
 }
 
-void Player::go_down(Map& map){
-    std::pair<int, int> xy = get_xy();
+bool Player::go_down(Map& map){
+    std::pair<int, int> xy = get_position();
+    std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
     xy.second--;
-    change_xy(map, xy);
+    bool is_go= change_xy(map, xy);
+    return is_go;
 }
 
-std::pair<int, int> Player::get_xy(){
-    return xy;
+std::pair<int, int> Player::get_position(){
+    return position;
 }
 
 int Player::get_points(){

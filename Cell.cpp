@@ -1,10 +1,12 @@
 #include "map.h"
 
-Cell::Cell(int level){
-    srand(time(0));
+void Cell::explore(Player &player){
+    if (done){
+        std:: cout << "You've been here before." << std::endl;
+        return;
+    }
 
-    lvl = level;
-    done = rand();
+    map_obj->use(player);
 }
 
 int Cell::get_lvl(){
