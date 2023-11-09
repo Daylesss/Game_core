@@ -50,7 +50,7 @@ ItemData Item::get_item_data(){
     return item_data;
 }
 
-void Item::use(Player &player) {
+void Item::use(Player *player) {
     char choice = '\0';
     while (true){
         std::cout<<"---------------------\n"<<"You find a "<<Obj_name<<"!!\n"<<"---------------------\n"<<std::endl;
@@ -64,14 +64,14 @@ void Item::use(Player &player) {
 
         std::cin>>choice;
         if (choice=='Y'){
-            player.throw_out_item();
-            if (player.change_points(-cost)){
-                player.change_max_health(health);
-                player.change_max_mana(mana);
-                player.increase_health(health);
-                player.increase_mana(mana);
-                player.damage += damage;
-                player.set_item(item_data);
+            player->throw_out_item();
+            if (player->change_points(-cost)){
+                player->change_max_health(health);
+                player->change_max_mana(mana);
+                player->increase_health(health);
+                player->increase_mana(mana);
+                player->damage += damage;
+                player->set_item(item_data);
                 decrease_map_hp();
 
                 std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -86,7 +86,7 @@ void Item::use(Player &player) {
 
         if (choice=='N'){
             std::cout<<"You're walking away from the "<<Obj_name<<std::endl;
-            system("cls");
+            std::this_thread::sleep_for(std::chrono::seconds(2));
             return;
         }
         system("cls");

@@ -35,20 +35,20 @@ class MapObj {
         int get_map_hp();
         bool is_alive();
         virtual void decrease_map_hp();
-        virtual void use(Player &player);
+        virtual void use(Player *player);
 };
 
 
-void explore_map(Player &player, Map &map);
+void explore_map(Player *player, Map &map);
 class Map {
-    friend void explore_map(Player &player, Map &map);
+    friend void explore_map(Player *player, Map &map);
     int lvl = 1;
     bool created = false;
     std::string game_status = "-";
     std::vector<std::vector<Cell>> sqr_map;
     class WrongPoint{};
 
-    void explore(Player &player);
+    void explore(Player *player);
 
     public:
         Map(int level){
@@ -69,6 +69,7 @@ class Map {
         void create_map();
         bool is_created();
         std::string get_game_status();
+        int get_level();
 };
 
 struct ItemData{
@@ -85,16 +86,16 @@ class Player: public MapObj {
     friend Altar;
     friend Item;
     friend Enemy;
-    friend void explore_map(Player &player, Map &map);
+    friend void explore_map(Player *player, Map &map);
 
     protected:
         std::pair<int, int> position = {0,0};
         int points = 10;
         int health = 5;
         int damage = 1;
-        int mana = 1;
+        int mana = 0;
         int max_health = 5;
-        int max_mana = 1;
+        int max_mana = 0;
         ItemData item_data{};
 
         void die();
@@ -102,12 +103,15 @@ class Player: public MapObj {
         void increase_health(int x);
         bool decrease_mana(int x, bool change);
         void increase_mana(int x);
-        bool change_points(int x); 
         void change_max_health(int x);
         void change_max_mana(int x);
         bool change_xy(Map &map, std::pair<int, int> _xy);
+        void change_damage(int x);
+
+        virtual void level_up();
     public:
-        Player (int lvl): MapObj(lvl){
+        Player (int lvl, std::string name): MapObj(lvl){
+        Obj_name = name;
         alive = true;
         map_hp = 1;
         level = lvl;
@@ -120,7 +124,9 @@ class Player: public MapObj {
         int get_mana();
         int get_max_mana();
         int get_damage();
+        virtual bool is_mage();
 
+        bool change_points(int x); 
         void set_item(ItemData _item_data);
 
         bool go_left(Map& map);
@@ -128,6 +134,58 @@ class Player: public MapObj {
         bool go_up(Map& map);
         bool go_down(Map& map);
 
+};
+
+class Mage: public Player{
+    protected:
+        void level_up();
+    public:
+        Mage (int lvl, std::string name): Player(lvl, name){
+        Obj_name = name;
+        alive = true;
+        map_hp = 1;
+        level = lvl;
+        max_mana = 3;
+        mana = 3;
+        health = 10;
+        max_health = 10;
+        damage = 3;
+        };
+
+        bool is_mage();
+};
+
+class Shadow: public Player{
+    private:
+    int dex = 0;
+    void level_up();
+    void decrease_health(int x);
+    public:
+        Shadow (int lvl, std::string name): Player(lvl, name){
+        Obj_name = name;
+        alive = true;
+        map_hp = 1;
+        level = lvl;
+        health = 15;
+        max_health = 15;
+        dex = 2;
+        };
+};
+
+class Werewolf: public Player{
+    void level_up();
+    void decrease_health(int x);
+    void transformation();
+    public:
+        Werewolf (int lvl, std::string name): Player(lvl, name){
+        Obj_name = name;
+        alive = true;
+        map_hp = 2;
+        level = lvl;
+        health = 10;
+        max_health = 10;
+        damage = 2;
+        };
 };
 
 class Item: public MapObj {
@@ -149,7 +207,7 @@ class Item: public MapObj {
                 set_params(random_key);
             };
             ItemData get_item_data();
-            void use(Player &player);
+            void use(Player *player);
             void decrease_map_hp();
 };
 
@@ -166,10 +224,11 @@ class Altar: public MapObj {
             cost = (rand() % 5 + 1) * level;
             heal = (rand() % 7 + 1) * level;
         };
-        void use(Player &player);
+        void use(Player *player);
 };
 
-
+void get_player_info(Player *player);
+void get_map(std::pair<int, int> pos, int lvl);
 struct EnemyData{
     std::string name = "Unknown";
     bool boss = false;
@@ -182,10 +241,12 @@ class Enemy: public MapObj{
     EnemyData enemy_data;
     std::string get_inp();
     std::pair<int, int> gen_nums();
-    void fight(Player &player);
+    void fight(Player *player);
     void decrease_health(int x);
 
     void die();
+
+    void get_enemy_info();
 
     public:
     Enemy (int lvl): MapObj(lvl){
@@ -207,7 +268,7 @@ class Enemy: public MapObj{
 
     EnemyData get_enemy_data();
     
-    void use(Player & player);
+    void use(Player * player);
 
 };
 
@@ -217,7 +278,7 @@ class Cell{
     int done = 0;
     MapObj * map_obj;
 
-    void explore(Player &player);
+    void explore(Player *player);
     public:
         Cell(int level){
             lvl = level;
@@ -238,3 +299,4 @@ class Cell{
         int is_done();
 };
 
+Player * choose_class();

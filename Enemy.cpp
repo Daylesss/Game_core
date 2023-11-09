@@ -13,9 +13,11 @@ std::string Enemy::get_inp(){
         if (_kbhit()) { 
             char ch = _getch();
             player_inp += ch;
+            std::cout<<ch;
         }
 
         if (GetTickCount() - start_time > wait_time) {
+            std::cout << "\n";
             break;
         }
     }
@@ -62,12 +64,20 @@ void Enemy::decrease_health(int x){
     }
 }
 
+void Enemy::get_enemy_info(){
+    std::cout <<"\n" <<Obj_name << ": " << level << "lvl\n";
+    std::cout << "Health: " << enemy_data.health << "\n";
+    std::cout << "Damage: " << enemy_data.damage << "\n\n";
+    std::cout << "Points: " << enemy_data.points << "\n\n";
+}
 
-void Enemy::fight(Player &player){
+
+void Enemy::fight(Player *player){
     while (enemy_data.health > 0){
         std::pair<int, int> nums = gen_nums();
         int sum = nums.first + nums.second;
-
+        get_player_info(player);
+        get_enemy_info();
         std::cout << "Ready to " << enemy_data.name << " attack" << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(2));
 
@@ -76,49 +86,59 @@ void Enemy::fight(Player &player){
         std::string answer;
         answer = get_inp();
 
-        std::cout << answer;
+        // std::cout << answer;
 
         if (answer == (" " + std::to_string(sum))){
             std::cout<<"Cool!" << std::endl;
-            decrease_health(player.get_damage());
+            decrease_health(player->get_damage());
             std::cout << enemy_data.health;
         }
         else if (answer != " s"){
             std::cout << "Oh no..." << std::endl;
-            player.decrease_health(enemy_data.damage);
+            player->decrease_health(enemy_data.damage);
         }
         else{
-            if (player.decrease_mana(1, false)){
+            if (player->decrease_mana(1, false)){
                 std::cout << "You are using magic!" << std::endl;
+                if (player->is_mage()){
+                    std::cout << "Your knowledge in magic helps you to attack the "<<Obj_name<<"!" << std::endl;
+                    decrease_health(player->get_damage());
+                }
                 std::this_thread::sleep_for(std::chrono::seconds(2));
+                system("cls");
                 continue;
             }
             else{
                 std::cout << "Oh no..." << std::endl;
-                player.decrease_health(enemy_data.damage);
+                player->decrease_health(enemy_data.damage);
             }
         }
 
         if (!alive){
-            player.change_points(enemy_data.points);
+            std::cout << "You got " << enemy_data.points << " points\n";
+            player->change_points(enemy_data.points);
+            std::this_thread::sleep_for(std::chrono::seconds(2));
             break;
         }
 
-        if (!player.is_alive()){
+        if (!player->is_alive()){
             break;
         }
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        system("cls");
     }
 
-    if (player.is_alive()){
+    if (player->is_alive()){
         std::cout << "You're walking away from the " << Obj_name << std::endl;
     }
     else{
+        std::this_thread::sleep_for(std::chrono::seconds(2));
         system("cls");
         std::cout << "Restart program to try again" << std::endl;
     }
 }
 
-void Enemy::use(Player &player){
+void Enemy::use(Player *player){
 
     while (true){
         std::cout<<"---------------------\n"<<"You find a "<<Obj_name<<"!!\n"<<"---------------------\n"<<std::endl;
@@ -141,7 +161,6 @@ void Enemy::use(Player &player){
             break;
         }
     }
-    
     fight(player);
 
 }

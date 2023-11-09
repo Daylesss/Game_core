@@ -4,27 +4,28 @@
 #include <ostream>
 #include <string>
 
+void get_map(std::pair<int, int> pos, int lvl){
+    std::string line_o(lvl +1, '-');
+    std::cout << "\n-------------\n";
+    for (int i=0; i < (lvl + 1); i++){
+        if (i == pos.second){
+            line_o[pos.first] = '0';
+            std::cout << line_o << std::endl;
+            line_o[pos.first] = '-';
+        }
+        else{
+        std::cout << line_o << std::endl;
+        }
+    }
+    std::cout << "-------------\n";
+}
+
 int main() {
-    // DWORD start_time = GetTickCount();  // получаем текущее время
-    // DWORD wait_time = 10000;  // время ожидания в миллисекундах (10 секунд)
-    // std::string player_inp= "";
-    // std::cout << "10 sec: ";
+    std::pair<int, int> pos = {2, 3};
 
-    // while(true) {
-    //     if (_kbhit()) { 
-    //         char ch = _getch();
-    //         player_inp += ch; 
-    //         std::cout << "\nYou: " << player_inp << std::endl;
-    //     }
+    int lvl = 5;
 
-    //     if (GetTickCount() - start_time > wait_time) {
-    //         std::cout << "\nThe end!" << std::endl;
-    //         break;
-    //     }
-    // }
+    get_map(pos, lvl);
 
-    std::cout<<"xyi\n";
-
-    std::cout<<"\b\r   *****";
     return 0;
 }

@@ -7,12 +7,12 @@ bool Map::check_way(std::pair<int, int> xy) {
     return false;
 }
 
-void Map::explore(Player &player){
+void Map::explore(Player *player){
     if (!is_created()){
         std::cout << "Map is not created yet.";
         return;
     }
-    std::pair<int, int> xy = player.get_position(); 
+    std::pair<int, int> xy = player->get_position(); 
     sqr_map[xy.first][xy.second].explore(player);
 }
 
@@ -44,5 +44,9 @@ bool Map::is_created(){
 
 std::string Map::get_game_status(){
     return game_status;
+}
+
+int Map::get_level(){
+    return lvl;
 }
 

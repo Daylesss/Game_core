@@ -1,6 +1,6 @@
 #include "map.h"
 
-void Altar::use(Player &player){
+void Altar::use(Player *player){
 
     char choice = '\0';
     while (true){
@@ -10,8 +10,8 @@ void Altar::use(Player &player){
 
         std::cin>>choice;
         if (choice=='Y'){
-            if(player.change_points(-cost)){
-                player.increase_health(heal);
+            if(player->change_points(-cost)){
+                player->increase_health(heal);
                 decrease_map_hp();
                 system("cls");
                 return;
@@ -22,6 +22,7 @@ void Altar::use(Player &player){
         if (choice=='N'){
             system("cls");
             std::cout<<"You're walking away from the altar"<<std::endl;
+            std::this_thread::sleep_for(std::chrono::seconds(2));
             return;
         }
 

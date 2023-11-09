@@ -41,6 +41,6 @@ void MapObj::decrease_map_hp(){
     }
 }
 
-void MapObj::use(Player &player) {
+void MapObj::use(Player *player) {
     std::cout<< "You can not use this"<<std::endl;
 }

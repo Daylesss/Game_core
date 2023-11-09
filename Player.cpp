@@ -14,8 +14,10 @@ void Player::decrease_health(int x){
     }
     if (health > x){
         health -=x;
+        std::cout << "You got " << std::to_string(x) << " damage"<< std::endl;
     }
     else{
+        std::cout << "You got " << std::to_string(x) << " damage"<< std::endl;
         die();
     }
 };
@@ -82,6 +84,16 @@ void Player::change_max_mana(int x){
     }
 }
 
+void Player::change_damage(int x){
+    int temp_damage = x + damage;
+    if (temp_damage <= 0){
+        damage = 1;
+    }
+    else{
+        damage += x;
+    }
+}
+
 bool Player::change_points(int x){
     int temp_points = points + x;
     if (temp_points < 0){
@@ -123,7 +135,7 @@ void Player::throw_out_item(){
 
 bool Player::go_left(Map& map){
     std::pair<int, int> xy = get_position();
-    std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
+    // std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
     xy.first--;
     bool is_go= change_xy(map, xy);
     return is_go;
@@ -131,7 +143,7 @@ bool Player::go_left(Map& map){
 
 bool Player::go_right(Map& map){
     std::pair<int, int> xy = get_position();
-    std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
+    // std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
     xy.first++;
     bool is_go= change_xy(map, xy);
     return is_go;
@@ -139,7 +151,7 @@ bool Player::go_right(Map& map){
 
 bool Player::go_up(Map& map){
     std::pair<int, int> xy = get_position();
-    std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
+    // std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
     xy.second++;
     bool is_go = change_xy(map, xy);
     return is_go;
@@ -147,7 +159,7 @@ bool Player::go_up(Map& map){
 
 bool Player::go_down(Map& map){
     std::pair<int, int> xy = get_position();
-    std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
+    // std::cout <<"Old: (" <<xy.first<<":"<< xy.second <<")" << std::endl;
     xy.second--;
     bool is_go= change_xy(map, xy);
     return is_go;
@@ -183,4 +195,15 @@ int Player::get_max_mana(){
 
 void Player::set_item(ItemData _item_data){
     item_data = _item_data;
+};
+
+bool Player::is_mage(){
+    return false;
+};
+
+void Player::level_up(){
+    level +=1;
+    change_max_health(1);
+    increase_health(1);
+    change_damage(1);
 };
