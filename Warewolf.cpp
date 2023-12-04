@@ -1,4 +1,4 @@
-#include "map.h"
+#include "Werewolf.h"
 
 void Werewolf::level_up(){
     level +=1;

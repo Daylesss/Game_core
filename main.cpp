@@ -1,13 +1,13 @@
 #pragma(once)
-#include <windows.h>
-#include <conio.h>
+// #include <windows.h>
+// #include <conio.h>
 #include <iostream>
 #include <string>
 #include <iostream>
 #include <chrono>
 #include <thread>
 #include <vector>
-#include <Algorithm>
+// #include <Algorithm>
 #include "Map.h"
 #include "Player.h"
 

@@ -1,4 +1,4 @@
-#include "map.h"
+#include "Mage.h"
 
 bool Mage::is_mage(){
     return true;

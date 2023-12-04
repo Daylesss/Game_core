@@ -1,5 +1,5 @@
 
-#include "map.h"
+#include "Other.h"
 
 ItemData::ItemData(){
         for (int i=0; i<5; i++){
@@ -8,14 +8,21 @@ ItemData::ItemData(){
 }
 
 char get_input(){
-    while(true) {
-        if (_kbhit()) { 
-            char ch = _getch();
-            if ((ch=='w') or (ch=='a') or (ch=='s') or (ch=='d')){
-                return ch;
-            }
-        }
+    // while(true) {
+    //     if (_kbhit()) { 
+    //         char ch = _getch();
+    //         if ((ch=='w') or (ch=='a') or (ch=='s') or (ch=='d')){
+    //             return ch;
+    //         }
+    //     }
+    // }
+    while (true){
+        char ch = '0';
+        ch << std::cin;
+        if ((ch=='w') or (ch=='a') or (ch=='s') or (ch=='d')){
+            return ch;
     }
+    
 }
 
 void get_map(std::pair<int, int> pos, int lvl){

@@ -1,8 +1,5 @@
 #pragma(once)
-#include <iostream>
-#include <string>
 #include "MapObj.h"
-#include "Map.h"
 #include "Altar.h"
 #include "Enemy.h"
 #include "Item.h"

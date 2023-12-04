@@ -1,4 +1,4 @@
-#include "map.h"
+#include "Shadow.h"
 
 void Shadow::level_up(){
     level +=1;

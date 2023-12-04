@@ -1,4 +1,4 @@
-#include "map.h"
+#include "Altar.h"
 
 void Altar::use(Player *player){
 

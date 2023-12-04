@@ -1,4 +1,5 @@
-#include "map.h"
+#pragma(once)
+#include "MapObj.h"
 
 MapObj::MapObj(int lvl) { 
     alive = true;

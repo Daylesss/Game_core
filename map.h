@@ -1,8 +1,7 @@
+#pragma(once)
 #include "Player.h"
 #include "Other.h"
 #include "Cell.h"
-#pragma(once)
-
 class Map {
     friend void explore_map(Player *player, Map &map);
     int lvl = 1;

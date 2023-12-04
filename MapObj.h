@@ -1,12 +1,5 @@
-
 #pragma(once)
-#include <iostream>
-#include <string>
-#include "Player.h"
-
-
-
-
+class Player;
 class MapObj {
     protected:
         int level = 0;

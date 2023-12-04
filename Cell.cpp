@@ -1,4 +1,4 @@
-#include "map.h"
+#include "Cell.h"
 
 
 void Cell::explore(Player *player){

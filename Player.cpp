@@ -1,5 +1,4 @@
-
-#include "map.h"
+#include "Player.h"
 
 void Player::die(){
     health = 0;

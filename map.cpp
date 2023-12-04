@@ -1,4 +1,4 @@
-#include "map.h"
+#include "Map.h"
 
 bool Map::check_way(std::pair<int, int> xy) {
     if ((((xy.first <= lvl) and (xy.first >=0)) and ((xy.second <= lvl) and (xy.second >=0))) and (created)){
