@@ -1,0 +1,4 @@
+cmake_minimum_required(VERSION 3.5)
+project(Game_core)
+file(GLOB SOURCES h/.h cpp/.cpp)
+add_executable(Game_core ${SOURCES})
