@@ -1,9 +1,10 @@
+#pragma(once)
+#include "MapObj.h"
 #include "Player.h"
-#include "Enemy.h"
 #include "Altar.h"
 #include "Item.h"
+#include "Enemy.h"
 
-#pragma(once)
 
 
 class Cell{

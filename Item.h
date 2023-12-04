@@ -1,6 +1,7 @@
-#include "Player.h"
 #pragma(once)
-
+#include "MapObj.h"
+#include "Player.h"
+#include "Other.h"
 class Item: public MapObj {
     
         int cost = 0;

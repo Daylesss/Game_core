@@ -1,5 +1,5 @@
-#include "Player.h"
 #pragma(once)
+#include "Player.h"
 
 class Shadow: public Player{
     private:

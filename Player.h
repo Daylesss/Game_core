@@ -1,12 +1,13 @@
+#pragma(once)
 #include <iostream>
 #include <string>
 #include "MapObj.h"
-#include "Map1.h"
+#include "Map.h"
 #include "Altar.h"
-#include "Item.h"
 #include "Enemy.h"
+#include "Item.h"
+#include "Other.h"
 
-#pragma(once)
 
 
 class Player: public MapObj {

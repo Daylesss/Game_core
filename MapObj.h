@@ -1,10 +1,10 @@
 
+#pragma(once)
 #include <iostream>
 #include <string>
 #include "Player.h"
 
 
-#pragma(once)
 
 
 class MapObj {

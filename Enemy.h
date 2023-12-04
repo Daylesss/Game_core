@@ -1,7 +1,14 @@
+#pragma(once)
+#include "MapObj.h"
 #include "Player.h"
 
-#pragma(once)
-
+struct EnemyData{
+    std::string name = "Unknown";
+    bool boss = false;
+    int damage = 0;
+    int health = 5;
+    int points = 0;
+};
 class Enemy: public MapObj{
     EnemyData enemy_data;
     std::string get_inp();

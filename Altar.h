@@ -1,6 +1,7 @@
-#include "Player.h"
-
 #pragma(once)
+#include "Player.h"
+#include "MapObj.h"
+
 
 
 class Altar: public MapObj {

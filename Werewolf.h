@@ -1,6 +1,6 @@
+#pragma(once)
 #include "Player.h"
 
-#pragma(once)
 
 
 class Werewolf: public Player{
