@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <memory>
 #include <conio.h>
 #include <iostream>
 #include <string>
@@ -276,7 +277,7 @@ class Cell{
     friend Map;
     int lvl = 1;
     int done = 0;
-    MapObj * map_obj;
+    std::shared_ptr<MapObj> map_obj;
 
     void explore(Player *player);
     public:
@@ -286,17 +287,19 @@ class Cell{
             int key = rand() % 3;
 
             if (key == 0){
-                map_obj = new Altar{lvl};
+                map_obj = std::make_shared<Altar>(lvl);
             }
             else if (key == 1){
-                map_obj = new Item{lvl};
+                map_obj = std::make_shared<Item>(lvl);
             }
             else{
-                map_obj = new Enemy{lvl};
+                map_obj = std::make_shared<Enemy>(lvl);
             }
         }  
         int get_lvl();
         int is_done();
 };
+
+
 
 Player * choose_class();
