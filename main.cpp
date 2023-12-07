@@ -4,14 +4,11 @@ int main()
 {   
 
     srand(time(0));
-    Map map(3);
+    Map map(1);
     map.create_map();
 
     Player * player = choose_class();
 
     explore_map(player, map);
-    // Player player(1, "TEST!");
-    // std:: cout << player.get_points() << "\n";
-    // player.change_points(10000);
-    // std:: cout << player.get_points() << "\n";
+
 };

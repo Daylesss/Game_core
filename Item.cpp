@@ -64,18 +64,28 @@ void Item::use(Player *player) {
 
         std::cin>>choice;
         if (choice=='Y'){
+            std::cout<<"00000000"<<choice<<"000000000000\n";
             player->throw_out_item();
             if (player->change_points(-cost)){
+                std::cout<<"2222222222222\n";
                 player->change_max_health(health);
+                std::cout<<"2222222222222\n";
                 player->change_max_mana(mana);
+                std::cout<<"2222222222222\n";
                 player->increase_health(health);
+                std::cout<<"2222222222222\n";
                 player->increase_mana(mana);
+                std::cout<<"2222222222222\n";
                 player->damage += damage;
+                std::cout<<"2222222222222\n";
                 player->set_item(item_data);
+                std::cout<<"2222222222222\n";
                 decrease_map_hp();
+                std::cout<<"2222222222222\n";
 
                 std::this_thread::sleep_for(std::chrono::seconds(1));
                 system("cls");
+                std::cout<<"3333333333333333\n";
                 return;
             }
             std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -87,6 +97,7 @@ void Item::use(Player *player) {
         if (choice=='N'){
             std::cout<<"You're walking away from the "<<Obj_name<<std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2));
+            std::cout<<"44444444444444444\n";
             return;
         }
         system("cls");

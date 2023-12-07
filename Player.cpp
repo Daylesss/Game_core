@@ -121,15 +121,17 @@ bool Player::change_xy(Map &map, std::pair<int, int> _xy){
 
 void Player::throw_out_item(){
     // int item_data[5] ={cost, level, damage, health, mana};
+    std::cout<<"!!!!!!!!!!\n";
     damage -= item_data.data[2];
     change_max_mana(-item_data.data[4]);
     decrease_mana(item_data.data[4], true);
     change_max_health(-item_data.data[3]);
     decrease_health(item_data.data[3]);
-    for (int i; i<5; i++){
+    for (int i=0; i<5; i++){
         item_data.data[i] = 0;
     }
     item_data.item_name = "Unknown";
+    std::cout<<"1111111111111111111111\n";
 }
 
 

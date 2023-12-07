@@ -1,3 +1,4 @@
+#pragma once
 #include <windows.h>
 #include <memory>
 #include <conio.h>
@@ -8,8 +9,6 @@
 #include <thread>
 #include <vector>
 #include <Algorithm>
-
-#pragma(once)
 
 class Map;
 class Player;
@@ -201,7 +200,7 @@ class Item: public MapObj {
         public:
             Item(int _lvl): MapObj(_lvl){
                 level = _lvl;
-                srand(time(0));
+                // srand(time(0));
                 int random_key = rand();
                 alive = true;
 
@@ -284,7 +283,7 @@ class Cell{
         Cell(int level){
             lvl = level;
 
-            int key = rand() % 3;
+            int key = rand() % 4;
 
             if (key == 0){
                 map_obj = std::make_shared<Altar>(lvl);

@@ -11,7 +11,7 @@ char get_input(){
     while(true) {
         if (_kbhit()) { 
             char ch = _getch();
-            if ((ch=='w') or (ch=='a') or (ch=='s') or (ch=='d')){
+            if ((ch=='w') || (ch=='a') || (ch=='s') || (ch=='d')){
                 return ch;
             }
         }

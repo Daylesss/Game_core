@@ -150,7 +150,7 @@ void Enemy::use(Player *player){
             system("cls");
             return;
         }
-        if ((choice!="Y") and (choice!="N")){
+        if ((choice!="Y") && (choice!="N")){
             system("cls");
             std::cout<<"Wrong input. Input Y or N"<<std::endl;
 

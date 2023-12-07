@@ -1,0 +1,3 @@
+D:/IT/prg/test_game_core/Game_core/build/CMakeFiles/lab2.dir
+D:/IT/prg/test_game_core/Game_core/build/CMakeFiles/ALL_BUILD.dir
+D:/IT/prg/test_game_core/Game_core/build/CMakeFiles/ZERO_CHECK.dir
