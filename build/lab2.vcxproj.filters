@@ -1,57 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\Altar.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\Altar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\Cell.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\Cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\Enemy.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\Item.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\Mage.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\Mage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\main.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\map.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\MapObj.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\MapObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\Other.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\Other.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\Player.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\Shadow.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\Shadow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\IT\prg\test_game_core\Game_core\Warewolf.cpp">
+    <ClCompile Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\Warewolf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\IT\prg\test_game_core\Game_core\map.h">
+    <ClInclude Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\IT\prg\test_game_core\Game_core\CMakeLists.txt" />
+    <CustomBuild Include="D:\IT\prg\cpp_code\labs\test_game_core\Game_core\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{F57D6831-A26A-3FB4-A43A-B23D0DA811FD}</UniqueIdentifier>
+      <UniqueIdentifier>{7E2D1861-80A4-343B-9977-69C3FBF5BDA8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{B5822992-9045-3093-86A3-99C38E3DBDB1}</UniqueIdentifier>
+      <UniqueIdentifier>{5F48BE81-39D9-3B6A-9BEF-397891D194DD}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

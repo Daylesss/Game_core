@@ -1,4 +1,4 @@
-# Install script for directory: D:/IT/prg/test_game_core/Game_core
+# Install script for directory: D:/IT/prg/cpp_code/labs/test_game_core/Game_core
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/IT/prg/test_game_core/Game_core/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/IT/prg/cpp_code/labs/test_game_core/Game_core/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

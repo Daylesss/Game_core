@@ -1,6 +1,6 @@
-^D:\IT\PRG\TEST_GAME_CORE\GAME_CORE\CMAKELISTS.TXT
+^D:\IT\PRG\CPP_CODE\LABS\TEST_GAME_CORE\GAME_CORE\CMAKELISTS.TXT
 setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SD:/IT/prg/test_game_core/Game_core -BD:/IT/prg/test_game_core/Game_core/build --check-stamp-file D:/IT/prg/test_game_core/Game_core/build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/IT/prg/cpp_code/labs/test_game_core/Game_core -BD:/IT/prg/cpp_code/labs/test_game_core/Game_core/build --check-stamp-file D:/IT/prg/cpp_code/labs/test_game_core/Game_core/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
